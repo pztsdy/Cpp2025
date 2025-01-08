@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "string": "cpp",
+        "iostream": "cpp",
+        "scoped_allocator": "cpp",
+        "fstream": "cpp",
+        "*.tcc": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "regex": "cpp"
+    }
+}
