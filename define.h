@@ -116,3 +116,4 @@
 
 // Winapi abbreviation
 #define SetConsoleTextColor SetConsoleTextAttribute
+#define ll long long
