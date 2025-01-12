@@ -35,4 +35,19 @@
 注：在`define.h`已经定义`#define ll long long`，所以，`ll`即可表示`long long` 类型
 
 ## `wapi.hpp`
-这是一个Windows Api参考代码库，
+这是一个Windows Api参考代码库，定义了一些常用Windows程序代码
+### `pause()`
+在Windows控制台程序中显示："按任意键继续..."
+### `cls()`
+清空屏幕
+### `clearcolor(HANDLE handle, bool isUseDosMode, bool isUseDosCommandCls)`
+#### 参数
+参数1: HANDLE handle   控制台句柄
+
+参数2: bool isUseDosMode   是否使用控制台命令`color`
+
+参数3: bool isUseDosCommandCls   是否清屏
+#### 解释
+清空文字颜色（如果参数2为`false`，那么将不会将上文文字消除）。
+#### 注：
+下一个函数 `colorclear(HANDLE handle)`即参数2与参数3为`false`的clearcolor()函数，以后不再赘述。

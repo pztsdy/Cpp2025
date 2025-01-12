@@ -36,11 +36,6 @@
 #define __winsystem__ false
 #endif
 
-#ifndef __INC_HEADER_
-#define __INC_HEADER_ \0
-#define RETURN_CHANGES_Inc 0x2418b9cc
-#endif
-
 void pause()
 {
 	system("pause");
@@ -84,7 +79,7 @@ void colorclear(HANDLE handle)
 	return;
 }
 
-void MouseMaster(POINT mouse, int x, int y){
+void MoveMouse(POINT mouse, int x, int y){
 	srand(time(0));
 	GetCursorPos(&mouse);
 	mouse.x=x;
