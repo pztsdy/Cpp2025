@@ -19,6 +19,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <mmdeviceapi.h>
+#include <endpointvolume.h>
+#pragma comment(lib, "winmm.lib")
 
 #if __cplusplus >= 201103L
 #include <ccomplex>

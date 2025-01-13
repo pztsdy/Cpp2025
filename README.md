@@ -35,19 +35,29 @@
 注：在`define.h`已经定义`#define ll long long`，所以，`ll`即可表示`long long` 类型
 
 ## `wapi.hpp`
-这是一个Windows Api参考代码库，定义了一些常用Windows程序代码
-### `pause()`
-在Windows控制台程序中显示："按任意键继续..."
-### `cls()`
-清空屏幕
-### `clearcolor(HANDLE handle, bool isUseDosMode, bool isUseDosCommandCls)`
-#### 参数
-参数1: HANDLE handle   控制台句柄
+这是一个Windows API参考代码库，定义了一些常用的Windows程序接口和功能。
 
-参数2: bool isUseDosMode   是否使用控制台命令`color`
+### 预定义常量
+用于设置控制台文本颜色：
+- `TEXT_RED`, `TEXT_GREEN`, `TEXT_BLUE`, `TEXT_LIGHT` - 文本颜色
+- `BG_RED`, `BG_GREEN`, `BG_BLUE`, `BG_LIGHT` - 背景颜色
 
-参数3: bool isUseDosCommandCls   是否清屏
-#### 解释
-清空文字颜色（如果参数2为`false`，那么将不会将上文文字消除）。
-#### 注：
-下一个函数 `colorclear(HANDLE handle)`即参数2与参数3为`false`的clearcolor()函数，以后不再赘述。
+### 函数说明
+#### 基础控制台操作
+- `pause()` - 显示"按任意键继续..."并等待用户按键
+- `cls()` - 清空控制台屏幕
+- `clearcolor(HANDLE handle, bool isUseDosMode, bool isUseDosCommandCls)` - 重置控制台文本颜色
+  - `handle`: 控制台句柄
+  - `isUseDosMode`: 是否使用DOS命令 `color` 重置
+  - `isUseDosCommandCls`: 是否同时清屏
+- `colorclear(HANDLE handle)` - clearcolor()的简化版本，相当于参数2和3为false
+
+#### 鼠标和窗口操作
+- `MoveMouse(POINT &mouse, int x, int y)` - 移动鼠标到指定坐标
+- `SetWindowTitle(HWND hwnd, const char *title)` - 设置窗口标题
+- `GetScreenResolution(int &width, int &height)` - 获取屏幕分辨率
+
+#### 系统功能
+- `SetSystemVolume(DWORD volume)` - 设置系统音量(0-100)
+- `GetSystemTimeStr(char *timeStr)` - 获取系统时间字符串
+- `SimulateKeyPress(WORD key)` - 模拟键盘按键
