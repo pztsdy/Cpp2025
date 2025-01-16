@@ -35,3 +35,29 @@ bool ll_big_to_small(long long x, long long y)
 
 // insert your more cmp_function here (long long)
 // ...
+
+float float_small_to_big(float x, float y)
+{
+    return x < y;
+}
+
+float float_big_to_small(float x, float y)
+{
+    return x > y;
+}
+
+// insert your more cmp_function here (float)
+// ...
+
+double double_small_to_big(double x, double y)
+{
+    return x < y;
+}
+
+double double_big_to_small(double x, double y)
+{
+    return x > y;
+}
+
+// insert your more cmp_function here (double)
+// ...

@@ -7,6 +7,7 @@
 
 	SetConsoleTextAttribute(handle, BG_RED | ...);
 */
+
 /*
 	POINT mouse;
 	srand(time(0));
