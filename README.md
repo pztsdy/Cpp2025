@@ -14,6 +14,12 @@
 
 开始使用：克隆此存储库以开始使用，或定位到release页面下载某版本使用
 
+## 将Cpp2025导入到自己的编译器中
+1. 打开你的编译器IncludePath
+2. 新建目录Cpp2025
+3. 将release中的版本归档文件解压并释放到Cpp2025目录中
+4. 要使用时，将你需要的头文件导入，如：`#include <Cpp2025/Algorithm.hpp>`
+
 ## 函数及功能说明
 
 ### `all.h`
@@ -58,10 +64,25 @@
 - `SimulateKeyPress(WORD key)` - 模拟键盘按键
 
 ### `Algorithm.hpp`
-包含了[`define.h`](define.h)的内容，提供了基础的定义和宏。
+包含了一些常用的算法函数，包括递归和数学运算。
 
-### `define.h`
-包含了C++标准库和Windows API的头文件，并定义了一些常用的宏和类型别名。
+#### 函数列表
+- `int factorial(int n)` - 计算整数 `n` 的阶乘
+- `int fibonacci(int n)` - 计算第 `n` 个斐波那契数
+- `int Pow(int x, int n)` - 计算 `x` 的 `n` 次幂
+- `int gcd(int a, int b)` - 计算两个整数 `a` 和 `b` 的最大公约数
+- `int lcm(int a, int b)` - 计算两个整数 `a` 和 `b` 的最小公倍数
+- `bool isPrime(int n)` - 判断整数 `n` 是否为素数
+- `std::vector<int> sieve_prime(int n)` - 使用埃拉托色尼筛法找出小于等于 `n` 的所有素数
+- `int binarySearch(const std::vector<int>& arr, int target)` - 在有序数组中查找目标值
+
+
+### 示例程序
+#### `demo1.cpp`
+展示了如何使用 `wapi.hpp` 中的函数进行一些基本的Windows操作。
+
+#### `demo3.cpp`
+展示了如何使用 `Algorithm.hpp` 中的函数进行一些基本的算法操作。
 
 ### 许可证
 本项目使用MIT许可证，详见[`LICENSE`](LICENSE)文件。
