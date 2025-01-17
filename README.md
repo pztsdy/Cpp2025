@@ -62,6 +62,47 @@
 - `SetSystemVolume(DWORD volume)` - 设置系统音量(0-100)
 - `GetSystemTimeStr(char *timeStr)` - 获取系统时间字符串
 - `SimulateKeyPress(WORD key)` - 模拟键盘按键
+- `SimulateMouseClick(int x, int y)` - 模拟鼠标点击
+- `SimulateMouseMove(int x, int y)` - 模拟鼠标移动
+- `GetMousePosition(int &x, int &y)` - 获取鼠标位置
+- `GetWindowHandle(const char *title)` - 获取窗口句柄
+- `GetWindowPosition(HWND hwnd, int &x, int &y)` - 获取窗口位置
+- `SetWindowPosition(HWND hwnd, int x, int y)` - 设置窗口位置
+- `GetWindowSize(HWND hwnd, int &width, int &height)` - 获取窗口大小
+- `SetWindowSize(HWND hwnd, int width, int height)` - 设置窗口大小
+- `GetWindowTitle(HWND hwnd, char *title)` - 获取窗口标题
+- `GetWindowClassName(HWND hwnd, char *className)` - 获取窗口类名
+- `GetWindowProcessId(HWND hwnd)` - 获取窗口进程ID
+- `GetWindowThreadId(HWND hwnd)` - 获取窗口线程ID
+- `GetWindowParent(HWND hwnd)` - 获取窗口父窗口
+- `GetWindowChild(HWND hwnd)` - 获取窗口子窗口
+- `GetWindowNext(HWND hwnd)` - 获取窗口兄弟窗口
+- `GetWindowPrev(HWND hwnd)` - 获取窗口上一个窗口
+- `GetWindowLevel(HWND hwnd)` - 获取窗口层级
+- `GetWindowStyle(HWND hwnd)` - 获取窗口样式
+- `GetWindowExStyle(HWND hwnd)` - 获取窗口扩展样式
+- `GetWindowClassStyle(HWND hwnd)` - 获取窗口类样式
+- `GetWindowProcessHandle(HWND hwnd)` - 获取窗口进程句柄
+- `GetWindowThreadHandle(HWND hwnd)` - 获取窗口线程句柄
+- `GetWindowModuleHandle(HWND hwnd)` - 获取窗口模块句柄
+- `GetWindowModuleFileName(HWND hwnd, char *fileName)` - 获取窗口模块文件名
+- `GetWindowModulePath(HWND hwnd, char *path)` - 获取窗口模块路径
+- `GetWindowModuleName(HWND hwnd, char *name)` - 获取窗口模块名称
+- `GetWindowModuleVersion(HWND hwnd, char *version)` - 获取窗口模块版本
+- `GetWindowModuleDescription(HWND hwnd, char *description)` - 获取窗口模块描述
+- `GetWindowModuleCompany(HWND hwnd, char *company)` - 获取窗口模块公司
+- `GetWindowModuleCopyRight(HWND hwnd, char *copyRight)` - 获取窗口模块版权
+- `GetWindowModuleProductName(HWND hwnd, char *productName)` - 获取窗口模块产品名
+- `GetWindowModuleProductVersion(HWND hwnd, char *productVersion)` - 获取窗口模块产品版本
+- `GetWindowModuleInternalName(HWND hwnd, char *internalName)` - 获取窗口模块内部名
+- `GetWindowModuleOriginalFileName(HWND hwnd, char *originalFileName)` - 获取窗口模块原始文件名
+- `GetWindowModulePrivateVersion(HWND hwnd, char *privateVersion)` - 获取窗口模块私有版本号
+- `GetWindowModuleSpecialBuild(HWND hwnd, char *specialBuild)` - 获取窗口模块特殊版本
+- `GetWindowModuleLanguage(HWND hwnd, char *language)` - 获取窗口模块语言
+- `GetWindowModuleBuildTime(HWND hwnd, char *buildTime)` - 获取窗口模块编译时间
+- `GetWindowModuleSize(HWND hwnd)` - 获取窗口模块大小
+- `SetWindowChild(HWND hwnd, HWND parent)` - 设置一个窗口为另一个窗口的子窗口
+- `SetWindowParent(HWND hwnd, HWND child)` - 设置一个窗口为另一个窗口的父窗口
 
 ### `Algorithm.hpp`
 包含了一些常用的算法函数，包括递归和数学运算。
@@ -75,11 +116,16 @@
 - `bool isPrime(int n)` - 判断整数 `n` 是否为素数
 - `std::vector<int> sieve_prime(int n)` - 使用埃拉托色尼筛法找出小于等于 `n` 的所有素数
 - `int binarySearch(const std::vector<int>& arr, int target)` - 在有序数组中查找目标值
-
+- `int quickSelect(std::vector<int>& arr, int left, int right, int k)` - 在数组中查找第 `k` 小的元素
+- `int selectKthSmallest(std::vector<int>& arr, int k)` - 查找数组中第 `k` 小的元素
+- `int partition(std::vector<int>& arr, int left, int right, int pivotIndex)` - 分区函数，用于快速选择算法
 
 ### 示例程序
 #### `demo1.cpp`
 展示了如何使用 `wapi.hpp` 中的函数进行一些基本的Windows操作。
+
+#### `demo2.cpp`
+展示了如何使用 `sortcmp.hpp` 中的函数进行排序操作。
 
 #### `demo3.cpp`
 展示了如何使用 `Algorithm.hpp` 中的函数进行一些基本的算法操作。
