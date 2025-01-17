@@ -269,7 +269,14 @@ HWND GetWindowPrev(HWND hwnd)
 // 获取窗口层级
 int GetWindowLevel(HWND hwnd)
 {
-	return (int)GetParent(hwnd);
+    HWND parent = GetParent(hwnd);
+    int level = 0;
+    while (parent != NULL)
+    {
+        level++;
+        parent = GetParent(parent);
+    }
+    return level;
 }
 
 // 获取窗口样式
@@ -287,13 +294,14 @@ DWORD GetWindowExStyle(HWND hwnd)
 // 获取窗口类样式
 DWORD GetWindowClassStyle(HWND hwnd)
 {
-	WNDCLASSEX wc;
-	char className[256];
-	GetWindowClassName(hwnd, className);
-	WCHAR wClassName[256];
-	MultiByteToWideChar(CP_ACP, 0, className, -1, wClassName, 256);
-	GetClassInfoEx(GetModuleHandle(NULL), wClassName, &wc);
-	return wc.style;
+    char className[256];
+    GetClassNameA(hwnd, className, sizeof(className));
+    WNDCLASSEXA wc;
+    if (GetClassInfoExA(GetModuleHandle(NULL), className, &wc))
+    {
+        return wc.style;
+    }
+    return 0;
 }
 
 // 获取窗口进程句柄
