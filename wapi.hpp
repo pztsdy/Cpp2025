@@ -1,4 +1,11 @@
 #include "define.h"
+#include <windows.h>
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <mmdeviceapi.h>
+#include <endpointvolume.h>
+#include <VersionHelpers.h>
 
 /*
 
@@ -58,6 +65,7 @@ void cls()
 	return;
 }
 
+#ifdef _WIN32
 void clearcolor(HANDLE handle, bool isUseDosMode, bool isUseDosCommandCls)
 {
 	SetConsoleTextAttribute(handle, TEXT_RED | TEXT_BLUE | TEXT_GREEN);
@@ -72,6 +80,7 @@ void clearcolor(HANDLE handle, bool isUseDosMode, bool isUseDosCommandCls)
 
 	return;
 }
+#endif
 
 void colorclear(HANDLE handle)
 { // support for old-vision code
@@ -110,22 +119,50 @@ void SetSystemVolume(DWORD volume)
 { // volume: 0-100
 	HRESULT hr;
 	IMMDeviceEnumerator *deviceEnumerator = NULL;
+	hr = CoInitialize(NULL);
+	if (FAILED(hr)) {
+		std::cerr << "Failed to initialize COM library." << std::endl;
+		return;
+	}
+
 	hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_ALL,
 						  __uuidof(IMMDeviceEnumerator), (LPVOID *)&deviceEnumerator);
+	if (FAILED(hr)) {
+		std::cerr << "Failed to create device enumerator." << std::endl;
+		CoUninitialize();
+		return;
+	}
 
 	IMMDevice *defaultDevice = NULL;
 	hr = deviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &defaultDevice);
+	if (FAILED(hr)) {
+		std::cerr << "Failed to get default audio endpoint." << std::endl;
+		deviceEnumerator->Release();
+		CoUninitialize();
+		return;
+	}
 
 	IAudioEndpointVolume *endpointVolume = NULL;
 	hr = defaultDevice->Activate(__uuidof(IAudioEndpointVolume),
 								 CLSCTX_ALL, NULL, (LPVOID *)&endpointVolume);
+	if (FAILED(hr)) {
+		std::cerr << "Failed to activate endpoint volume." << std::endl;
+		defaultDevice->Release();
+		deviceEnumerator->Release();
+		CoUninitialize();
+		return;
+	}
 
 	float vol = volume / 100.0f;
-	endpointVolume->SetMasterVolumeLevelScalar(vol, NULL);
+	hr = endpointVolume->SetMasterVolumeLevelScalar(vol, NULL);
+	if (FAILED(hr)) {
+		std::cerr << "Failed to set master volume level." << std::endl;
+	}
 
 	endpointVolume->Release();
 	defaultDevice->Release();
 	deviceEnumerator->Release();
+	CoUninitialize();
 }
 
 // 获取系统时间
@@ -174,10 +211,20 @@ void GetMousePosition(int &x, int &y)
 	y = p.y;
 }
 
-// 创建一个窗口并返回句柄
+// 注册窗口类并返回窗口句柄
 HWND CreateWindowHandle(const char *title, int x, int y, int width, int height)
 {
-	return CreateWindowA("STATIC", title, WS_OVERLAPPEDWINDOW, x, y, width, height, NULL, NULL, NULL, NULL);
+	const char CLASS_NAME[] = "Sample Window Class";
+
+	WNDCLASSA wc = { };
+
+	wc.lpfnWndProc   = DefWindowProcA;
+	wc.hInstance     = GetModuleHandle(NULL);
+	wc.lpszClassName = CLASS_NAME;
+
+	RegisterClassA(&wc);
+
+	return CreateWindowA(CLASS_NAME, title, WS_OVERLAPPEDWINDOW, x, y, width, height, NULL, NULL, GetModuleHandle(NULL), NULL);
 }
 
 // 获取窗口句柄

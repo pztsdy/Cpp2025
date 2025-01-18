@@ -21,6 +21,7 @@
 #include <ctime>
 #include <mmdeviceapi.h>
 #include <endpointvolume.h>
+#include <psapi.h>
 #pragma comment(lib, "winmm.lib")
 
 #if __cplusplus >= 201103L
