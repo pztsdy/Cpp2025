@@ -52,12 +52,13 @@
   - `isUseDosMode`: 是否使用DOS命令 `color` 重置
   - `isUseDosCommandCls`: 是否同时清屏
 - `colorclear(HANDLE handle)` - clearcolor()的简化版本，相当于参数2和3为false
+- `HideCursor` - 隐藏控制台光标
+- `ShowCursor` - 显示控制台光标
 
 ##### 鼠标和窗口操作
 - `MoveMouse(POINT &mouse, int x, int y)` - 移动鼠标到指定坐标
 - `SetWindowTitle(HWND hwnd, const char *title)` - 设置窗口标题
 - `GetScreenResolution(int &width, int &height)` - 获取屏幕分辨率
-
 ##### 系统功能
 - `SetSystemVolume(DWORD volume)` - 设置系统音量(0-100)
 - `GetSystemTimeStr(char *timeStr)` - 获取系统时间字符串

@@ -101,6 +101,22 @@ void MoveMouse(POINT &mouse, int x, int y)
 	return;
 }
 
+void HideCursor() {
+	CONSOLE_CURSOR_INFO cursor;
+	cursor.bVisible = FALSE;
+	cursor.dwSize = sizeof(cursor);
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorInfo(handle, &cursor);
+}
+
+void ShowCursor() {
+	CONSOLE_CURSOR_INFO cursor;
+	cursor.bVisible = TRUE;
+	cursor.dwSize = sizeof(cursor);
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorInfo(handle, &cursor);
+}
+
 // 窗口操作
 void SetWindowTitle(HWND hwnd, const char *title)
 {
