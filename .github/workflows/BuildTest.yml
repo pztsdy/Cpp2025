@@ -66,7 +66,7 @@ jobs:
       - name: Run Demo
         run: |
           cd examples
-          demo1.exe  # 运行编译后的 demo 程序
-          demo2.exe
-          demo3.exe
-          demo4.exe
+          .\demo1.exe  # 运行编译后的 demo 程序
+          .\demo2.exe
+          .\demo3.exe
+          .\demo4.exe
