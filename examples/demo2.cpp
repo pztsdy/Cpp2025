@@ -20,7 +20,7 @@ int main(){
     for (int i = 0; i < 5; i++)
         cout << a[i] << " ";
     cout << endl;
-    sort(a, a + 5, int_oFjS);
+    sort(a, a + 5, int_jFOS);
     cout << "After sort (oFjS): ";
     for (int i = 0; i < 5; i++)
         cout << a[i] << " ";

@@ -11,13 +11,22 @@ bool int_big_to_small(int x, int y)
     return x > y;
 }
 
-bool int_oFjS(int x, int y)
+bool int_jFOS(int x, int y)
 {
     if (x % 2 == 0 && y % 2 != 0)
         return x > y;
     if (x % 2 != 0 && y % 2 == 0)
         return y > x;
     return x > y;
+}
+
+bool int_oFjS(int x, int y)
+{
+    if (x % 2 == 0 && y % 2 != 0)
+        return x < y;
+    if (x % 2 != 0 && y % 2 == 0)
+        return y < x;
+    return x < y;
 }
 
 // insert your more cmp_function here (int)

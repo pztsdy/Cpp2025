@@ -18,13 +18,13 @@ jobs:
         uses: actions/checkout@v2
 
       # Step 2: 设置 Visual Studio 环境
-      - name: Set up Visual Studio
+      - name: Set up Visual Studio latest
         uses: microsoft/setup-msbuild@v1.1
         with:
           vs-version: 'latest'  # 安装最新版本的 Visual Studio
 
       # Step 3: 编译 examples 目录下的 demo 程序
-      - name: Compile Demo
+      - name: Compile Demo Programs
         run: |
           cd examples
           g++.exe demo1.cpp -o demo1.exe -lole32  # 使用 G++
@@ -52,15 +52,15 @@ jobs:
             Write-Host "Compilation successful, demo3.exe found. Run."
           } else {
             Write-Host "Compilation failed, demo3.exe not found."
-            exit 1  # 如果未找到 demo3.exe，标记为失败
+            exit 1  # 如果未找到 demo3.exe, 标记为失败
           }
 
-            if (Test-Path "examples\\demo4.exe") {
-                Write-Host "Compilation successful, demo4.exe found. Run."
-            } else {
-                Write-Host "Compilation failed, demo4.exe not found."
-                exit 1  # 如果未找到 demo4.exe，标记为失败
-            }
+          if (Test-Path "examples\\demo4.exe") {
+              Write-Host "Compilation successful, demo4.exe found. Run."
+          } else {
+              Write-Host "Compilation failed, demo4.exe not found."
+              exit 1  # 如果未找到 demo4.exe, 标记为失败
+          }
 
       # Step 5: 运行 demo 程序
       - name: Run Demo
