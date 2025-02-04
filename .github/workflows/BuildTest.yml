@@ -57,6 +57,7 @@ jobs:
           } else {
             Write-Host "Compilation failed, demo4.exe not found."
             exit 1
+          }
 
       - name: Run Demo
         run: |
