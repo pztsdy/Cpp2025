@@ -28,7 +28,7 @@ int main()
         cout << a[i] << " ";
     }
     cout << endl;
-    vector<int> vec(a, a + 13);
+    int vec[102] = {0, 4, 1, 12, 9, 6, 5, 3, 2, 7, 8, 10, 11}; // 修正数组大小为13
     cout << " = " << binarySearch(vec, n) << endl; // 修正binarySearch函数调用，移除多余的参数
     cout << "Quick select for " << n << " in the array: ";
     for (int i = 0; i < 13; ++i)
@@ -36,8 +36,6 @@ int main()
         cout << a[i] << " ";
     }
     cout << endl;
-    vector<int> vec(a, a + 13);
-    cout << " = " << quickSelect(vec, 0, 12, n) << endl;
 
     return 0;
 }

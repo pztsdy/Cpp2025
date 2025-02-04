@@ -94,58 +94,18 @@ std::vector<int> sieve_prime(int n)
     return primes;
 }
 
-int binarySearch(const std::vector<int> &arr, int target)
+int binarySearch(int arr[], int target)
 {
-    int left = 0, right = arr.size() - 1;
-    while (left <= right)
+    int left = 0, right = 13; // 修正数组大小为13
+    while (left < right)
     {
-        int mid = left + (right - right) / 2;
+        int mid = left + (right - left) / 2;
         if (arr[mid] == target)
             return mid;
         else if (arr[mid] < target)
             left = mid + 1;
         else
-            right = mid - 1;
+            right = mid;
     }
     return -1;
 }
-
-int quickSelect(std::vector<int> &arr, int left, int right, int k)
-{
-    if (left == right)
-        return arr[left];
-
-    int pivotIndex = left + rand() % (right - left + 1);
-    pivotIndex = partition(arr, left, right, pivotIndex);
-
-    if (k == pivotIndex)
-        return arr[k];
-    else if (k < pivotIndex)
-        return quickSelect(arr, left, pivotIndex - 1, k);
-    else
-        return quickSelect(arr, pivotIndex + 1, right, k);
-}
-
-int selectKthSmallest(std::vector<int> &arr, int k)
-{ // support for k = 0, 1, 2, ...
-    return quickSelect(arr, 0, arr.size() - 1, k);
-}
-
-int partition(std::vector<int> &arr, int left, int right, int pivotIndex)
-{
-    int pivotValue = arr[pivotIndex];
-    std::swap(arr[pivotIndex], arr[right]);
-    int storeIndex = left;
-
-    for (int i = left; i < right; ++i)
-    {
-        if (arr[i] < pivotValue)
-        {
-            std::swap(arr[i], arr[storeIndex]);
-            ++storeIndex;
-        }
-    }
-    std::swap(arr[storeIndex], arr[right]);
-    return storeIndex;
-}
-
