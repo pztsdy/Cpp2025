@@ -27,10 +27,10 @@ jobs:
       - name: Compile Demo
         run: |
           cd examples
-          cl /EHsc demo1.cpp  # 使用 MSVC 的 cl 编译器编译 demo 程序
-          cl /EHsc demo2.cpp
-          cl /EHsc demo3.cpp
-          cl /EHsc demo4.cpp
+          g++.exe demo1.cpp -o demo1.exe  # 使用 G++
+          g++.exe demo2.cpp -o demo2.exe
+          g++.exe demo3.cpp -o demo3.exe
+          g++.exe demo4.cpp -o demo4.exe
       
       - name: Check if demo.exe exists
         run: |
