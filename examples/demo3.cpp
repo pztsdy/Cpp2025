@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "Algorithm.hpp" // 假设这些函数在Algorithm.hpp中定义
+#include "..\Algorithm.hpp" // 假设这些函数在Algorithm.hpp中定义
 
 using namespace std;
 

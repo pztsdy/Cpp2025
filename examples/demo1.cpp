@@ -35,7 +35,10 @@ int main() {
     pause();
 
     std::cout << "Simulate key press \"a\"" << std::endl;
+    char charge;
+    std::cin.get(charge);
     SimulateKeyPress('a'); // Removed unnecessary input
+    std::cout << "Input Key: " << charge << std::endl;
     std::cout << "thanks for using wapi.hpp!" << std::endl;
 
     std::cout << "Demo program using wapi.hpp" << std::endl;
