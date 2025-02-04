@@ -1,0 +1,72 @@
+name: Build and Test on Windows
+
+on:
+  push:
+    branches:
+      - main  # 可以根据需要修改为其他分支名
+  pull_request:
+    branches:
+      - main  # 对于 PR 也可以触发测试
+
+jobs:
+  build:
+    runs-on: windows-latest  # 在 Windows 系统上运行
+
+    steps:
+      # Step 1: Checkout 代码
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: 设置 Visual Studio 环境
+      - name: Set up Visual Studio
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          vs-version: 'latest'  # 安装最新版本的 Visual Studio
+
+      # Step 3: 编译 examples 目录下的 demo 程序
+      - name: Compile Demo
+        run: |
+          cd examples
+          cl /EHsc demo1.cpp  # 使用 MSVC 的 cl 编译器编译 demo 程序
+          cl /EHsc demo2.cpp
+          cl /EHsc demo3.cpp
+          cl /EHsc demo4.cpp
+      
+      - name: Check if demo.exe exists
+        run: |
+          if (Test-Path "examples\\demo1.exe") {
+            Write-Host "Compilation successful, demo1.exe found."
+          } else {
+            Write-Host "Compilation failed, demo1.exe not found."
+            exit 1  # 如果未找到 demo.exe，标记为失败
+          }
+          
+          if (Test-Path "examples\\demo2.exe") {
+            Write-Host "Compilation successful, demo2.exe found."
+          } else {
+            Write-Host "Compilation failed, demo2.exe not found."
+            exit 1  # 如果未找到 demo.exe，标记为失败
+          }
+        
+          if (Test-Path "examples\\demo3.exe") {
+            Write-Host "Compilation successful, demo3.exe found."
+          } else {
+            Write-Host "Compilation failed, demo3.exe not found."
+            exit 1  # 如果未找到 demo3.exe，标记为失败
+          }
+
+            if (Test-Path "examples\\demo4.exe") {
+                Write-Host "Compilation successful, demo4.exe found."
+            } else {
+                Write-Host "Compilation failed, demo4.exe not found."
+                exit 1  # 如果未找到 demo4.exe，标记为失败
+            }
+
+      # Step 5: 运行 demo 程序
+      - name: Run Demo
+        run: |
+          cd examples
+          demo1.exe  # 运行编译后的 demo 程序
+          demo2.exe
+          demo3.exe
+          demo4.exe
