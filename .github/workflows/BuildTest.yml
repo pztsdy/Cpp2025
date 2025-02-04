@@ -27,36 +27,36 @@ jobs:
       - name: Compile Demo
         run: |
           cd examples
-          g++.exe demo1.cpp -o demo1.exe -lcomsuppw -lole32  # 使用 G++
-          g++.exe demo2.cpp -o demo2.exe -lcomsuppw -lole32
-          g++.exe demo3.cpp -o demo3.exe -lcomsuppw -lole32
-          g++.exe demo4.cpp -o demo4.exe -lcomsuppw -lole32
+          g++.exe demo1.cpp -o demo1.exe -lole32  # 使用 G++
+          g++.exe demo2.cpp -o demo2.exe -lole32
+          g++.exe demo3.cpp -o demo3.exe -lole32
+          g++.exe demo4.cpp -o demo4.exe -lole32
       
       - name: Check if demo.exe exists
         run: |
           if (Test-Path "examples\\demo1.exe") {
-            Write-Host "Compilation successful, demo1.exe found."
+            Write-Host "Compilation successful, demo1.exe found. Run."
           } else {
             Write-Host "Compilation failed, demo1.exe not found."
-            exit 1  # 如果未找到 demo.exe，标记为失败
+            exit 1  # 如果未找到 demo.exe, 标记为失败
           }
           
           if (Test-Path "examples\\demo2.exe") {
-            Write-Host "Compilation successful, demo2.exe found."
+            Write-Host "Compilation successful, demo2.exe found. Run."
           } else {
             Write-Host "Compilation failed, demo2.exe not found."
-            exit 1  # 如果未找到 demo.exe，标记为失败
+            exit 1  # 如果未找到 demo.exe, 标记为失败
           }
         
           if (Test-Path "examples\\demo3.exe") {
-            Write-Host "Compilation successful, demo3.exe found."
+            Write-Host "Compilation successful, demo3.exe found. Run."
           } else {
             Write-Host "Compilation failed, demo3.exe not found."
             exit 1  # 如果未找到 demo3.exe，标记为失败
           }
 
             if (Test-Path "examples\\demo4.exe") {
-                Write-Host "Compilation successful, demo4.exe found."
+                Write-Host "Compilation successful, demo4.exe found. Run."
             } else {
                 Write-Host "Compilation failed, demo4.exe not found."
                 exit 1  # 如果未找到 demo4.exe，标记为失败
