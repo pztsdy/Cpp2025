@@ -35,6 +35,7 @@ jobs:
             Write-Host "Compilation successful, demo1.exe found. Run."
           } else {
             Write-Host "Compilation failed, demo1.exe not found."
+            Save-Transcript -Path "logs/BuildTest.log" -Force
             exit 1
           }
           
@@ -42,6 +43,7 @@ jobs:
             Write-Host "Compilation successful, demo2.exe found. Run."
           } else {
             Write-Host "Compilation failed, demo2.exe not found."
+            Save-Transcript -Path "logs/BuildTest.log" -Force
             exit 1
           }
         
@@ -49,6 +51,7 @@ jobs:
             Write-Host "Compilation successful, demo3.exe found. Run."
           } else {
             Write-Host "Compilation failed, demo3.exe not found."
+            Save-Transcript -Path "logs/BuildTest.log" -Force
             exit 1
           }
 
@@ -56,6 +59,7 @@ jobs:
             Write-Host "Compilation successful, demo4.exe found. Run."
           } else {
             Write-Host "Compilation failed, demo4.exe not found."
+            Save-Transcript -Path "logs/BuildTest.log" -Force
             exit 1
           }
 
@@ -68,13 +72,6 @@ jobs:
           .\demo4.exe
 
       - name: Save Logs
-        run: |
-          $currentTime = Get-Date -Format "yyyyMMdd_HHmmss"
-          $logFile = "logs/$currentTime.log"
-          mkdir logs -Force
-          Start-Transcript -Path $logFile
-          .\demo1.exe
-          .\demo2.exe
-          .\demo3.exe
-          .\demo4.exe
-          Stop-Transcript
+        run : |
+            mkdir -p logs
+            Save-Transcript -Path "logs/BuildTest.log" -Force
