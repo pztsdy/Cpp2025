@@ -27,10 +27,10 @@ jobs:
       - name: Compile Demo
         run: |
           cd examples
-          g++.exe demo1.cpp -o demo1.exe  # 使用 G++
-          g++.exe demo2.cpp -o demo2.exe
-          g++.exe demo3.cpp -o demo3.exe
-          g++.exe demo4.cpp -o demo4.exe
+          g++.exe demo1.cpp -o demo1.exe -lcomsuppw -lole32  # 使用 G++
+          g++.exe demo2.cpp -o demo2.exe -lcomsuppw -lole32
+          g++.exe demo3.cpp -o demo3.exe -lcomsuppw -lole32
+          g++.exe demo4.cpp -o demo4.exe -lcomsuppw -lole32
       
       - name: Check if demo.exe exists
         run: |
