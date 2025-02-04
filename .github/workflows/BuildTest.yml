@@ -3,10 +3,10 @@ name: Build and Test on Windows
 on:
   push:
     branches:
-      - master  # 可以根据需要修改为其他分支名
+      - master
   pull_request:
     branches:
-      - master  # 对于 PR 也可以触发测试
+      - master
 
 jobs:
   Build_And_Test_Logs_To_File:
@@ -31,35 +31,33 @@ jobs:
 
       - name: Check if demo.exe exists
         run: |
+          $logPath = "logs/BuildTest.log"
+          mkdir -p logs
           if (Test-Path "examples\\demo1.exe") {
-            Write-Host "Compilation successful, demo1.exe found. Run."
+            Write-Host "Compilation successful, demo1.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "Compilation failed, demo1.exe not found."
-            Save-Transcript -Path "logs/BuildTest.log" -Force
+            Write-Host "Compilation failed, demo1.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
           
           if (Test-Path "examples\\demo2.exe") {
-            Write-Host "Compilation successful, demo2.exe found. Run."
+            Write-Host "Compilation successful, demo2.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "Compilation failed, demo2.exe not found."
-            Save-Transcript -Path "logs/BuildTest.log" -Force
+            Write-Host "Compilation failed, demo2.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
         
           if (Test-Path "examples\\demo3.exe") {
-            Write-Host "Compilation successful, demo3.exe found. Run."
+            Write-Host "Compilation successful, demo3.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "Compilation failed, demo3.exe not found."
-            Save-Transcript -Path "logs/BuildTest.log" -Force
+            Write-Host "Compilation failed, demo3.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
 
           if (Test-Path "examples\\demo4.exe") {
-            Write-Host "Compilation successful, demo4.exe found. Run."
+            Write-Host "Compilation successful, demo4.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "Compilation failed, demo4.exe not found."
-            Save-Transcript -Path "logs/BuildTest.log" -Force
+            Write-Host "Compilation failed, demo4.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
 
@@ -72,6 +70,16 @@ jobs:
           .\demo4.exe
 
       - name: Save Logs
-        run : |
-            mkdir -p logs
-            Save-Transcript -Path "logs/BuildTest.log" -Force
+        run: |
+          $logPath = "logs/BuildTest.log"
+          Write-Host "Logs saved to $logPath" | Out-File -FilePath $logPath -Append
+  test_job:
+    runs-on: windows-latest
+    steps:
+      - name: TEST
+        run: |
+          echo TEST
+      - name: TEST2
+        run: |
+          echo Logs>nul
+      
