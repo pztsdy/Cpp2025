@@ -3,10 +3,10 @@ name: Build and Test on Windows
 on:
   push:
     branches:
-      - main  # 可以根据需要修改为其他分支名
+      - master  # 可以根据需要修改为其他分支名
   pull_request:
     branches:
-      - main  # 对于 PR 也可以触发测试
+      - master  # 对于 PR 也可以触发测试
 
 jobs:
   build:
