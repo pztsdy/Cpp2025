@@ -108,13 +108,13 @@
 
 // version mark
 #ifdef __cpp2025
-  #if __cpp2025 < 0x084
-  #define __cpp2025 0x084
+  #if __cpp2025 < 0x086
+  #define __cpp2025 0x086
   #endif
 #endif
 
 #ifndef __cpp2025
-  #define __cpp2025 0x084
+  #define __cpp2025 0x086
 #endif
 
 
