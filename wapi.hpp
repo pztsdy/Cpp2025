@@ -51,6 +51,13 @@ void pause()
 	return;
 }
 
+void noEchoPause()
+{
+	system("pause>nul");
+
+	return;
+}
+
 void cls()
 {
 	if (__winsystem__) // system judge
