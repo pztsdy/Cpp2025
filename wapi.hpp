@@ -35,6 +35,8 @@
 #define BG_BLUE 16
 #define BG_LIGHT 128
 
+#define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1:0)
+
 #ifdef _WINDOWS_
 #include <_mingw.h>
 #define __winsystem__ true
