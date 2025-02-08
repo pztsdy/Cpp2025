@@ -3,6 +3,7 @@
 #include "..\wapi.hpp"
 
 int main() {
+    std::cout << "A demo program use `wapi.hpp`" << std::endl;
     POINT mouse;
     int x = 100, y = 100;
     MoveMouse(mouse, x, y);
@@ -15,6 +16,7 @@ int main() {
     std::cout << "TEXT TEXT TEXT" << std::endl;
     std::cout << "clear console color" << std::endl;
     colorclear(GetStdHandle(STD_OUTPUT_HANDLE));
+    std::cout << "TEXT TEXT TEXT" << std::endl;
     pause();
     std::cout << "clear the screen" << std::endl; // Fixed typo: "scree" to "screen"
     cls();
