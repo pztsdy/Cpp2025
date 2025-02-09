@@ -15,7 +15,7 @@
 开始使用：克隆此存储库以开始使用，或定位到release页面下载某版本使用
 
 ## ⚠编译时的重要提示！⚠
-在您编译您的程序时，如果您引用的头文件**包含** `wapi.hpp` ，那么请您注意，在使用g++编译时添加 `-lole32` 命令。否则会导致编译不通过。
+在您编译您的程序时，如果您引用的头文件**包含** `wapi.hpp` ，那么请您注意，在使用g++编译时添加 `-lole32 -lversion` 命令。否则会导致编译不通过。
 
 ## 将Cpp2025导入到自己的编译器中
 1. 打开你的编译器IncludePath
@@ -55,13 +55,14 @@
   - `isUseDosMode`: 是否使用DOS命令 `color` 重置
   - `isUseDosCommandCls`: 是否同时清屏
 - `colorclear(HANDLE handle)` - clearcolor()的简化版本，相当于参数2和3为false
-- `HideCursor` - 隐藏控制台光标
-- `ShowCursor` - 显示控制台光标
+- `HideCursor()` - 隐藏控制台光标
+- `ShowCursor()` - 显示控制台光标
 
 ##### 鼠标和窗口操作
 - `MoveMouse(POINT &mouse, int x, int y)` - 移动鼠标到指定坐标
 - `SetWindowTitle(HWND hwnd, const char *title)` - 设置窗口标题
 - `GetScreenResolution(int &width, int &height)` - 获取屏幕分辨率
+
 ##### 系统功能
 - `SetSystemVolume(DWORD volume)` - 设置系统音量(0-100)
 - `GetSystemTimeStr(char *timeStr)` - 获取系统时间字符串
@@ -77,16 +78,15 @@
 - `GetWindowTitle(HWND hwnd, char *title)` - 获取窗口标题
 - `GetWindowClassName(HWND hwnd, char *className)` - 获取窗口类名
 - `GetWindowProcessId(HWND hwnd)` - 获取窗口进程ID
-- `GetWindowThreadId(HWND hwnd)` - 获取窗口线程ID
 - `GetWindowParent(HWND hwnd)` - 获取窗口父窗口
 - `GetWindowChild(HWND hwnd)` - 获取窗口子窗口
 - `GetWindowNext(HWND hwnd)` - 获取窗口兄弟窗口
 - `GetWindowLevel(HWND hwnd)` - 获取窗口层级
-- `GetWindowStyle(HWND hwnd)` - 获取窗口样式
 - `GetWindowClassStyle(HWND hwnd)` - 获取窗口类样式
 - `GetWindowProcessHandle(HWND hwnd)` - 获取窗口进程句柄
 - `SetWindowChild(HWND hwnd, HWND parent)` - 设置一个窗口为另一个窗口的子窗口
 - `SetWindowParent(HWND hwnd, HWND child)` - 设置一个窗口为另一个窗口的父窗口
+- `GetConsoleHwnd(void)` - 获取控制台句柄
 
 ### `Algorithm.hpp`
 包含了一些常用的算法函数，包括递归和数学运算。
@@ -113,6 +113,9 @@
 
 #### `demo3.cpp`
 展示了如何使用 `Algorithm.hpp` 中的函数进行一些基本的算法操作。
+
+#### `demo4.cpp`
+展示了如何使用 `wapi.hpp` 中的函数创建和操作窗口。
 
 ### 许可证
 本项目使用MIT许可证，详见[`LICENSE`](LICENSE)文件。

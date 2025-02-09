@@ -236,22 +236,6 @@ void GetMousePosition(int &x, int &y)
 	y = p.y;
 }
 
-// 注册窗口类并返回窗口句柄
-HWND CreateWindowHandle(const char *title, int x, int y, int width, int height)
-{
-	const char CLASS_NAME[] = "winapi_window_class";
-
-	WNDCLASSA wc = { };
-
-	wc.lpfnWndProc   = DefWindowProcA;
-	wc.hInstance     = GetModuleHandle(NULL);
-	wc.lpszClassName = CLASS_NAME;
-
-	RegisterClassA(&wc);
-
-	return CreateWindowA(CLASS_NAME, title, WS_OVERLAPPEDWINDOW, x, y, width, height, NULL, NULL, GetModuleHandle(NULL), NULL);
-}
-
 // 获取窗口句柄
 HWND GetWindowHandle(const char *title)
 {
@@ -375,24 +359,24 @@ HWND GetConsoleHwnd(void)
 {
        #define MY_BUFSIZE 1024 // Buffer size for console window titles.
        HWND hwndFound;         // This is what is returned to the caller.
-       char pszNewWindowTitle[MY_BUFSIZE]; // Contains fabricated
-                                           // WindowTitle.
-       char pszOldWindowTitle[MY_BUFSIZE]; // Contains original
-                                           // WindowTitle.
+	   wchar_t pszNewWindowTitle[MY_BUFSIZE]; // Contains fabricated
+											  // WindowTitle.
+	   wchar_t pszOldWindowTitle[MY_BUFSIZE]; // Contains original
+											  // WindowTitle.
 
        // Fetch current window title.
 
-       GetConsoleTitle(pszOldWindowTitle, MY_BUFSIZE);
+	   GetConsoleTitleW(pszOldWindowTitle, MY_BUFSIZE);
 
        // Format a "unique" NewWindowTitle.
 
-       wsprintf(pszNewWindowTitle,"%d/%d",
+	   swprintf(pszNewWindowTitle, MY_BUFSIZE, L"%d/%d",
                    GetTickCount(),
                    GetCurrentProcessId());
 
        // Change current window title.
 
-       SetConsoleTitle(pszNewWindowTitle);
+	   SetConsoleTitleW(pszNewWindowTitle);
 
        // Ensure window title has been updated.
 
@@ -400,11 +384,11 @@ HWND GetConsoleHwnd(void)
 
        // Look for NewWindowTitle.
 
-       hwndFound=FindWindow(NULL, pszNewWindowTitle);
+	   hwndFound=FindWindowW(NULL, pszNewWindowTitle);
 
        // Restore original window title.
 
-       SetConsoleTitle(pszOldWindowTitle);
+	   SetConsoleTitleW(pszOldWindowTitle);
 
        return(hwndFound);
 }
