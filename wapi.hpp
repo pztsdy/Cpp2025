@@ -355,40 +355,4 @@ void SetWindowParent(HWND hwnd, HWND child)
 }
 
 // 获取控制台窗口句柄
-HWND GetConsoleHwnd(void)
-{
-       #define MY_BUFSIZE 1024 // Buffer size for console window titles.
-       HWND hwndFound;         // This is what is returned to the caller.
-	   wchar_t pszNewWindowTitle[MY_BUFSIZE]; // Contains fabricated
-											  // WindowTitle.
-	   wchar_t pszOldWindowTitle[MY_BUFSIZE]; // Contains original
-											  // WindowTitle.
-
-       // Fetch current window title.
-
-	   GetConsoleTitleW(pszOldWindowTitle, MY_BUFSIZE);
-
-       // Format a "unique" NewWindowTitle.
-
-	   swprintf(pszNewWindowTitle, MY_BUFSIZE, L"%d/%d",
-                   GetTickCount(),
-                   GetCurrentProcessId());
-
-       // Change current window title.
-
-	   SetConsoleTitleW(pszNewWindowTitle);
-
-       // Ensure window title has been updated.
-
-       Sleep(40);
-
-       // Look for NewWindowTitle.
-
-	   hwndFound=FindWindowW(NULL, pszNewWindowTitle);
-
-       // Restore original window title.
-
-	   SetConsoleTitleW(pszOldWindowTitle);
-
-       return(hwndFound);
-}
+// GetConsoleWindow() 
