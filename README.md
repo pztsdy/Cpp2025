@@ -86,7 +86,6 @@
 - `GetWindowProcessHandle(HWND hwnd)` - 获取窗口进程句柄
 - `SetWindowChild(HWND hwnd, HWND parent)` - 设置一个窗口为另一个窗口的子窗口
 - `SetWindowParent(HWND hwnd, HWND child)` - 设置一个窗口为另一个窗口的父窗口
-- `GetConsoleHwnd(void)` - 获取控制台句柄
 
 ### `Algorithm.hpp`
 包含了一些常用的算法函数，包括递归和数学运算。
