@@ -49,6 +49,10 @@ int main() {
     cout << "change window1 title" << endl;
     SetWindowTextW(window1, L"Hello, World!");
 
+    // 隐藏窗口
+    cout << "Hide window2" << endl;
+    ShowWindow(window2, SW_HIDE);
+
     std::cout << "press any key to continue..." << std::endl;
     cin.get();
     return 0;

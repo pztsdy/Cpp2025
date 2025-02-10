@@ -28,6 +28,7 @@ jobs:
           g++.exe demo2.cpp -o demo2.exe -lole32
           g++.exe demo3.cpp -o demo3.exe -lole32
           g++.exe demo4.cpp -o demo4.exe -lole32
+          g++.exe demo5.cpp -o demo5.exe -lole32
 
       - name: Check if demo.exe exists
         run: |
@@ -61,6 +62,12 @@ jobs:
             exit 1
           }
 
+          if (Test-Path "examples\\demo5.exe") {
+            Write-Host "Compilation Successful, demo5.exe found. Run." | Out-File -FilePath $logPath -Append
+          } else {
+            Write-Host "demo5.exe not found." | Out-File -FilePath $logPath -Append
+          }
+
       - name: Run Demo
         run: |
           cd examples
@@ -68,6 +75,7 @@ jobs:
           .\demo2.exe
           .\demo3.exe
           .\demo4.exe
+          .\demo5.exe
 
       - name: Save Logs
         run: |
