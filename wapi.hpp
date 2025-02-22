@@ -30,12 +30,21 @@
 #define TEXT_GREEN 2
 #define TEXT_BLUE 1
 #define TEXT_LIGHT 8
+#define TEXT_YELLOW 6
+#define TEXT_CYAN 3
+#define TEXT_MAGENTA 5
+#define TEXT_WHITE 7
 #define BG_RED 64
 #define BG_GREEN 32
 #define BG_BLUE 16
 #define BG_LIGHT 128
+#define BG_YELLOW 96
+#define BG_CYAN 48
+#define BG_MAGENTA 80
+#define BG_WHITE 112
 
 #define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1:0)
+#define KEY_UP(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 0:1)
 
 #ifdef _WINDOWS_
 #include <_mingw.h>
@@ -74,7 +83,6 @@ void cls()
 	return;
 }
 
-#ifdef _WIN32
 void clearcolor(HANDLE handle, bool isUseDosMode, bool isUseDosCommandCls)
 {
 	SetConsoleTextAttribute(handle, TEXT_RED | TEXT_BLUE | TEXT_GREEN);
@@ -89,7 +97,6 @@ void clearcolor(HANDLE handle, bool isUseDosMode, bool isUseDosCommandCls)
 
 	return;
 }
-#endif
 
 void colorclear(HANDLE handle)
 { // support for old-vision code
