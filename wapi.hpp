@@ -46,12 +46,11 @@
 #define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1:0)
 #define KEY_UP(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 0:1)
 
-#ifdef _WINDOWS_
-#include <_mingw.h>
+#ifdef _WIN32
 #define __winsystem__ true
 #endif
 
-#ifndef _WINDOWS_
+#ifndef _WIN32
 #define __winsystem__ false
 #endif
 
@@ -107,7 +106,6 @@ void colorclear(HANDLE handle)
 
 void MoveMouse(POINT &mouse, int x, int y)
 {
-	// srand(time(0));
 	GetCursorPos(&mouse);
 	mouse.x = x;
 	mouse.y = y;

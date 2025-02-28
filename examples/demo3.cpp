@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "..\Algorithm.hpp" // 假设这些函数在Algorithm.hpp中定义
+#include "..\Algorithm.hpp"
 
 using namespace std;
 
@@ -15,6 +15,7 @@ int main()
     cout << "gcd(12, " << n << ") = " << gcd(12, n) << endl;
     cout << "lcm(12, " << n << ") = " << lcm(12, n) << endl;
     cout << "isPrime(" << n << ") = " << isPrime(n) << endl;
+    cout << "SUM(" << n << ") = " << SUM(n) << endl;
     vector<int> primes = sieve_prime(n);
     cout << "Primes less than or equal to " << n << ": ";
     for (int i = 0; i < primes.size(); ++i)

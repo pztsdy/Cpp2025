@@ -5,6 +5,15 @@
 
 
 // Algorithm
+
+int SUM(int n)
+{
+    if (n == 1)
+        return 1;
+    else
+        return n + SUM(n - 1);
+}
+
 int factorial(int n)
 {
     if (n <= 1)
