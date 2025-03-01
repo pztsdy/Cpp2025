@@ -4,11 +4,11 @@
 
 ## 版本
 
-- [v0.9](https://github.com/pztsdy/Cpp2025/releases) **即将推出**
-- [v0.9-pre3\(最新预览\)](https://github.com/pztsdy/Cpp2025/releases/tag/v0.9pre3)
+- [v0.9](https://github.com/pztsdy/Cpp2025/releases) \(**即将推出**\)
+- [v0.9-pre3](https://github.com/pztsdy/Cpp2025/releases/tag/v0.9pre3) **最新预览版**
 - [v0.9-pre2](https://github.com/pztsdy/Cpp2025/releases/tag/v0.9pre2)
 - [v0.9-pre1](https://github.com/pztsdy/Cpp2025/releases/tag/v0.9pre)
-- [v0.8.6\(最新版本\)](https://github.com/pztsdy/Cpp2025/releases/tag/v0.8.6)
+- [v0.8.6](https://github.com/pztsdy/Cpp2025/releases/tag/v0.8.6) **最新正式版**
 
 ## 运行环境及使用方法
 - 操作系统
