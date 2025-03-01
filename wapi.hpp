@@ -7,6 +7,10 @@
 #include <endpointvolume.h>
 #include <VersionHelpers.h>
 
+#ifndef WAPI_HPP
+#define WAPI_HPP
+#endif
+
 /*
 
 	HANDLE handle;

@@ -1,4 +1,8 @@
 #include "define.h"
+#ifndef SORTCMP_HPP
+#define SORTCMP_HPP
+#endif
+
 // sort
 
 bool int_small_to_big(int x, int y)

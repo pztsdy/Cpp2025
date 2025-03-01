@@ -2,6 +2,14 @@
 
 这是一个C++头文件库，提供了多种功能以及丰富的WinApi接口，它由[pztsdy](http://www.github.com/pztsdy)维护。
 
+## 版本
+
+- [v0.9](https://github.com/pztsdy/Cpp2025/releases) **即将推出**
+- [v0.9-pre3\(最新预览\)](https://github.com/pztsdy/Cpp2025/releases/tag/v0.9pre3)
+- [v0.9-pre2](https://github.com/pztsdy/Cpp2025/releases/tag/v0.9pre2)
+- [v0.9-pre1](https://github.com/pztsdy/Cpp2025/releases/tag/v0.9pre)
+- [v0.8.6\(最新版本\)](https://github.com/pztsdy/Cpp2025/releases/tag/v0.8.6)
+
 ## 运行环境及使用方法
 - 操作系统
   Windows（为保证稳定性，**请勿**擅自修改代码以在其它系统（如Linux, MacOS））
@@ -15,7 +23,7 @@
 开始使用：克隆此存储库以开始使用，或定位到release页面下载某版本使用
 
 ## ⚠编译时的重要提示！⚠
-在您编译您的程序时，如果您引用的头文件**包含** `wapi.hpp` ，那么请您注意，在使用g++编译时添加 `-lole32 -lversion` 命令以引导连接器(`ld.exe`)。否则会导致编译不通过。如果您使用了这两个命令但没有通过编译，请尝试删除`-lversion`，如果仍然无果，请在issus页面描述您的问题！
+在您编译您的程序时，如果您引用的头文件**包含** `wapi.hpp` ，那么请您注意，在使用g++编译时添加 `-lole32 -lversion` 命令以引导链接器(`ld.exe`)。否则会导致编译不通过。如果您使用了这两个命令但没有通过编译，请尝试删除`-lversion`，如果仍然无果，请在issus页面描述您的问题！
 
 ## 将Cpp2025导入到自己的编译器中
 1. 打开你的编译器IncludePath
