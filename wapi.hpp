@@ -21,11 +21,9 @@
 
 /*
 	POINT mouse;
-	srand(time(0));
 	GetCursorPos(&mouse);
 	mouse.x=rand()%1920;
 	mouse.y=rand()%1080;
-	// printf("%d %d\n",mouse.x,mouse.y);
 	SetCursorPos(mouse.x,mouse.y);
 	Sleep(2000);
 */
