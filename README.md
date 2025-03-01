@@ -65,6 +65,8 @@
 - `colorclear(HANDLE handle)` - clearcolor()的简化版本，相当于参数2和3为false
 - `HideCursor()` - 隐藏控制台光标
 - `ShowCursor()` - 显示控制台光标
+- `KeyDown(VK_NAME)` - 检测某键盘按键是否按下
+- `KeyUp(VK_NAME)` - 检测某键盘按键是否没有被按下
 
 ##### 鼠标和窗口操作
 - `MoveMouse(POINT &mouse, int x, int y)` - 移动鼠标到指定坐标
