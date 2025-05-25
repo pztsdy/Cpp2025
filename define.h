@@ -23,6 +23,9 @@
 #include <endpointvolume.h>
 #include <psapi.h>
 #pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "ole32.lib")
+#pragma comment(lib, "user32.lib")
+#pragma comment(lib, "oleaut32.lib")
 
 #if __cplusplus >= 201103L
 #include <ccomplex>
