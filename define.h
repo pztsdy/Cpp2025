@@ -93,7 +93,6 @@
 #include <windows.h>
 
 
-// version mark
 #ifdef __cpp2025
   #if __cpp2025 < 0x090
   #define __cpp2025 0x090
@@ -107,4 +106,10 @@
 
 // Winapi abbreviation
 #define SetConsoleTextColor SetConsoleTextAttribute
-#define ll long long
+
+// test
+  // #define cc ClearColor(GetStdHandle(STD_OUTPUT_HANDLE), false, false)
+  // #define stwl SetConsoleTextColor(GetStdHandle(STD_OUTPUT_HANDLE), TEXT_WHITE | TEXT_LIGHT)
+  // #define strl SetConsoleTextColor(GetStdHandle(STD_OUTPUT_HANDLE), TEXT_RED | TEXT_LIGHT)
+
+// #define ll long long
