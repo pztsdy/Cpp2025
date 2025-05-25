@@ -91,22 +91,6 @@
 #include <valarray>
 #include <vector>
 #include <windows.h>
-#include <bits/c++config.h>
-#include <bits/stringfwd.h>
-#include <bits/char_traits.h>
-#include <bits/allocator.h>
-#include <bits/cpp_type_traits.h>
-#include <bits/localefwd.h> 
-#include <bits/ostream_insert.h>
-#include <bits/stl_iterator_base_types.h>
-#include <bits/stl_iterator_base_funcs.h>
-#include <bits/stl_iterator.h>
-#include <bits/stl_function.h>
-#include <ext/numeric_traits.h> 
-#include <bits/stl_algobase.h> 
-#include <bits/range_access.h>
-#include <bits/basic_string.h>
-#include <bits/basic_string.tcc> 
 
 
 // version mark
