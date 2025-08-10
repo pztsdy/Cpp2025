@@ -39,6 +39,6 @@ assignees: ''
 任何其他你认为有助于该功能请求的信息。
 
 例如：\
-![simple_img](../../imgs/issus_template_feature-request-2.png)
+![simple_img](https://www.github.com/pztsdy/Cpp2025/imgs/issus_template_feature-request-2.png)
 
 可以通过图片等方式呈现。

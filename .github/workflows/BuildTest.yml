@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-    paths-ignore:  # 忽略logs目录的变更，防止循环触发
+    paths-ignore:
       - 'logs/**'
   pull_request:
     branches:
@@ -29,68 +29,104 @@ jobs:
         with:
           vs-version: 'latest'
 
+      - name: Generate timestamp
+        id: timestamp
+        run: |
+          $date = Get-Date -Format "yyyyMMdd_HHmmss"
+          echo "timestamp=$date" >> $env:GITHUB_OUTPUT
+
       - name: Compile Demo Programs
         run: |
-          cd examples
-          g++.exe demo1.cpp -o demo1.exe -lole32
-          g++.exe demo2.cpp -o demo2.exe -lole32
-          g++.exe demo3.cpp -o demo3.exe -lole32
-          g++.exe demo4.cpp -o demo4.exe -lole32
-          g++.exe demo5.cpp -o demo5.exe -lole32
-
-      - name: Check if demo.exe exists
-        run: |
-          $logPath = "logs/BuildTest.log"
+          $logFile = "logs/BuildTest_${{ steps.timestamp.outputs.timestamp }}.log"
           New-Item -ItemType Directory -Force -Path logs | Out-Null
-          if (Test-Path "examples\demo1.exe") {
-            "Compilation successful, demo1.exe found. Run." | Out-File -FilePath $logPath -Append
-          } else {
-            "Compilation failed, demo1.exe not found." | Out-File -FilePath $logPath -Append
-            exit 1
-          }
           
-          if (Test-Path "examples\demo2.exe") {
-            "Compilation successful, demo2.exe found. Run." | Out-File -FilePath $logPath -Append
-          } else {
-            "Compilation failed, demo2.exe not found." | Out-File -FilePath $logPath -Append
-            exit 1
+          function Log-Message {
+            param([string]$message)
+            $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+            "[$timestamp] $message" | Out-File -FilePath $logFile -Append
           }
-        
-          if (Test-Path "examples\demo3.exe") {
-            "Compilation successful, demo3.exe found. Run." | Out-File -FilePath $logPath -Append
+
+          cd examples
+          Log-Message "Starting compilation process..."
+          
+          g++.exe demo1.cpp -o demo1.exe -lole32
+          if ($LASTEXITCODE -eq 0) {
+            Log-Message "demo1.cpp compiled successfully"
           } else {
-            "Compilation failed, demo3.exe not found." | Out-File -FilePath $logPath -Append
+            Log-Message "ERROR: demo1.cpp compilation failed"
             exit 1
           }
 
-          if (Test-Path "examples\demo4.exe") {
-            "Compilation successful, demo4.exe found. Run." | Out-File -FilePath $logPath -Append
+          g++.exe demo2.cpp -o demo2.exe -lole32
+          if ($LASTEXITCODE -eq 0) {
+            Log-Message "demo2.cpp compiled successfully"
           } else {
-            "Compilation failed, demo4.exe not found." | Out-File -FilePath $logPath -Append
+            Log-Message "ERROR: demo2.cpp compilation failed"
             exit 1
           }
 
-          if (Test-Path "examples\demo5.exe") {
-            "Compilation Successful, demo5.exe found. Run." | Out-File -FilePath $logPath -Append
+          g++.exe demo3.cpp -o demo3.exe -lole32
+          if ($LASTEXITCODE -eq 0) {
+            Log-Message "demo3.cpp compiled successfully"
           } else {
-            "demo5.exe not found." | Out-File -FilePath $logPath -Append
+            Log-Message "ERROR: demo3.cpp compilation failed"
+            exit 1
+          }
+
+          g++.exe demo4.cpp -o demo4.exe -lole32
+          if ($LASTEXITCODE -eq 0) {
+            Log-Message "demo4.cpp compiled successfully"
+          } else {
+            Log-Message "ERROR: demo4.cpp compilation failed"
+            exit 1
+          }
+
+          g++.exe demo5.cpp -o demo5.exe -lole32
+          if ($LASTEXITCODE -eq 0) {
+            Log-Message "demo5.cpp compiled successfully"
+          } else {
+            Log-Message "WARNING: demo5.cpp compilation failed (non-critical)"
           }
 
       - name: Run Demo
         run: |
+          $logFile = "logs/BuildTest_${{ steps.timestamp.outputs.timestamp }}.log"
+          
+          function Log-Message {
+            param([string]$message)
+            $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+            "[$timestamp] $message" | Out-File -FilePath $logFile -Append
+          }
+
           cd examples
-          .\demo1.exe
-          .\demo2.exe
-          .\demo3.exe
-          .\demo4.exe
-          .\demo5.exe
+          Log-Message "Starting demo execution..."
+          
+          .\demo1.exe 2>&1 | ForEach-Object {
+            Log-Message "DEMO1 OUTPUT: $_"
+          }
+          
+          .\demo2.exe 2>&1 | ForEach-Object {
+            Log-Message "DEMO2 OUTPUT: $_"
+          }
+          
+          .\demo3.exe 2>&1 | ForEach-Object {
+            Log-Message "DEMO3 OUTPUT: $_"
+          }
+          
+          .\demo4.exe 2>&1 | ForEach-Object {
+            Log-Message "DEMO4 OUTPUT: $_"
+          }
+          
+          .\demo5.exe 2>&1 | ForEach-Object {
+            Log-Message "DEMO5 OUTPUT: $_"
+          }
 
       - name: Upload build logs
         uses: actions/upload-artifact@v4
         with:
           name: build-logs
           path: logs/
-          retention-days: 3  # 自动3天后删除旧日志
+          retention-days: 3
 
   Update_Logs:
     runs-on: windows-latest
@@ -111,7 +147,6 @@ jobs:
 
       - name: Commit and push logs
         run: |
-          # 检查是否有实际变更
           git add logs/
           $changes = git status --porcelain
           if ($changes) {
