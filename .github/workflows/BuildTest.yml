@@ -35,67 +35,89 @@ jobs:
           $date = Get-Date -Format "yyyyMMdd_HHmmss"
           echo "timestamp=$date" >> $env:GITHUB_OUTPUT
 
+      - name: Setup log directory
+        run: |
+          # 在仓库根目录创建logs文件夹
+          New-Item -ItemType Directory -Force -Path logs | Out-Null
+
       - name: Compile Demo Programs
         run: |
-          $logFile = "logs/BuildTest_${{ steps.timestamp.outputs.timestamp }}.log"
-          New-Item -ItemType Directory -Force -Path logs | Out-Null
+          # 使用仓库根目录的绝对路径
+          $logFile = "$env:GITHUB_WORKSPACE\logs\BuildTest_${{ steps.timestamp.outputs.timestamp }}.log"
           
           function Log-Message {
             param([string]$message)
             $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-            "[$timestamp] $message" | Out-File -FilePath $logFile -Append
+            "[$timestamp] $message" | Out-File -FilePath $logFile -Append -Encoding utf8
           }
 
-          cd examples
           Log-Message "Starting compilation process..."
+          cd examples
           
-          g++.exe demo1.cpp -o demo1.exe -lole32
+          # 编译并记录详细输出
+          Log-Message "Compiling demo1.cpp..."
+          g++.exe demo1.cpp -o demo1.exe -lole32 2>&1 | ForEach-Object {
+            Log-Message "COMPILE OUTPUT: $_"
+          }
           if ($LASTEXITCODE -eq 0) {
-            Log-Message "demo1.cpp compiled successfully"
+            Log-Message "SUCCESS: demo1.cpp compiled"
           } else {
-            Log-Message "ERROR: demo1.cpp compilation failed"
+            Log-Message "ERROR: demo1.cpp compilation failed (exit code $LASTEXITCODE)"
             exit 1
           }
-
-          g++.exe demo2.cpp -o demo2.exe -lole32
+          
+          Log-Message "Compiling demo2.cpp..."
+          g++.exe demo2.cpp -o demo2.exe -lole32 2>&1 | ForEach-Object {
+            Log-Message "COMPILE OUTPUT: $_"
+          }
           if ($LASTEXITCODE -eq 0) {
-            Log-Message "demo2.cpp compiled successfully"
+            Log-Message "SUCCESS: demo2.cpp compiled"
           } else {
-            Log-Message "ERROR: demo2.cpp compilation failed"
+            Log-Message "ERROR: demo2.cpp compilation failed (exit code $LASTEXITCODE)"
             exit 1
           }
-
-          g++.exe demo3.cpp -o demo3.exe -lole32
+          
+          Log-Message "Compiling demo3.cpp..."
+          g++.exe demo3.cpp -o demo3.exe -lole32 2>&1 | ForEach-Object {
+            Log-Message "COMPILE OUTPUT: $_"
+          }
           if ($LASTEXITCODE -eq 0) {
-            Log-Message "demo3.cpp compiled successfully"
+            Log-Message "SUCCESS: demo3.cpp compiled"
           } else {
-            Log-Message "ERROR: demo3.cpp compilation failed"
+            Log-Message "ERROR: demo3.cpp compilation failed (exit code $LASTEXITCODE)"
             exit 1
           }
-
-          g++.exe demo4.cpp -o demo4.exe -lole32
+          
+          Log-Message "Compiling demo4.cpp..."
+          g++.exe demo4.cpp -o demo4.exe -lole32 2>&1 | ForEach-Object {
+            Log-Message "COMPILE OUTPUT: $_"
+          }
           if ($LASTEXITCODE -eq 0) {
-            Log-Message "demo4.cpp compiled successfully"
+            Log-Message "SUCCESS: demo4.cpp compiled"
           } else {
-            Log-Message "ERROR: demo4.cpp compilation failed"
+            Log-Message "ERROR: demo4.cpp compilation failed (exit code $LASTEXITCODE)"
             exit 1
           }
-
-          g++.exe demo5.cpp -o demo5.exe -lole32
+          
+          Log-Message "Compiling demo5.cpp..."
+          g++.exe demo5.cpp -o demo5.exe -lole32 2>&1 | ForEach-Object {
+            Log-Message "COMPILE OUTPUT: $_"
+          }
           if ($LASTEXITCODE -eq 0) {
-            Log-Message "demo5.cpp compiled successfully"
+            Log-Message "SUCCESS: demo5.cpp compiled"
           } else {
-            Log-Message "WARNING: demo5.cpp compilation failed (non-critical)"
+            Log-Message "WARNING: demo5.cpp compilation failed (exit code $LASTEXITCODE)"
           }
 
       - name: Run Demo
         run: |
-          $logFile = "logs/BuildTest_${{ steps.timestamp.outputs.timestamp }}.log"
+          # 使用仓库根目录的绝对路径
+          $logFile = "$env:GITHUB_WORKSPACE\logs\BuildTest_${{ steps.timestamp.outputs.timestamp }}.log"
           
           function Log-Message {
             param([string]$message)
             $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-            "[$timestamp] $message" | Out-File -FilePath $logFile -Append
+            "[$timestamp] $message" | Out-File -FilePath $logFile -Append -Encoding utf8
           }
 
           cd examples
@@ -104,22 +126,27 @@ jobs:
           .\demo1.exe 2>&1 | ForEach-Object {
             Log-Message "DEMO1 OUTPUT: $_"
           }
+          Log-Message "Demo1 exit code: $LASTEXITCODE"
           
           .\demo2.exe 2>&1 | ForEach-Object {
             Log-Message "DEMO2 OUTPUT: $_"
           }
+          Log-Message "Demo2 exit code: $LASTEXITCODE"
           
           .\demo3.exe 2>&1 | ForEach-Object {
             Log-Message "DEMO3 OUTPUT: $_"
           }
+          Log-Message "Demo3 exit code: $LASTEXITCODE"
           
           .\demo4.exe 2>&1 | ForEach-Object {
             Log-Message "DEMO4 OUTPUT: $_"
           }
+          Log-Message "Demo4 exit code: $LASTEXITCODE"
           
           .\demo5.exe 2>&1 | ForEach-Object {
             Log-Message "DEMO5 OUTPUT: $_"
           }
+          Log-Message "Demo5 exit code: $LASTEXITCODE"
 
       - name: Upload build logs
         uses: actions/upload-artifact@v4
