@@ -10,16 +10,22 @@ on:
     branches:
       - master
 
+env:
+  GIT_AUTHOR_NAME: "github-actions"
+  GIT_COMMITTER_NAME: "github-actions"
+  GIT_AUTHOR_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+  GIT_COMMITTER_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+
 jobs:
   Build_And_Test_Logs_To_File:
     runs-on: windows-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Visual Studio latest
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1.3
         with:
           vs-version: 'latest'
 
@@ -36,35 +42,35 @@ jobs:
         run: |
           $logPath = "logs/BuildTest.log"
           New-Item -ItemType Directory -Force -Path logs | Out-Null
-          if (Test-Path "examples\\demo1.exe") {
+          if (Test-Path "examples\demo1.exe") {
             "Compilation successful, demo1.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
             "Compilation failed, demo1.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
           
-          if (Test-Path "examples\\demo2.exe") {
+          if (Test-Path "examples\demo2.exe") {
             "Compilation successful, demo2.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
             "Compilation failed, demo2.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
         
-          if (Test-Path "examples\\demo3.exe") {
+          if (Test-Path "examples\demo3.exe") {
             "Compilation successful, demo3.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
             "Compilation failed, demo3.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
 
-          if (Test-Path "examples\\demo4.exe") {
+          if (Test-Path "examples\demo4.exe") {
             "Compilation successful, demo4.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
             "Compilation failed, demo4.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
 
-          if (Test-Path "examples\\demo5.exe") {
+          if (Test-Path "examples\demo5.exe") {
             "Compilation Successful, demo5.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
             "demo5.exe not found." | Out-File -FilePath $logPath -Append
@@ -80,37 +86,38 @@ jobs:
           .\demo5.exe
 
       - name: Upload build logs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-logs
           path: logs/
+          retention-days: 3  # 自动3天后删除旧日志
 
   Update_Logs:
     runs-on: windows-latest
     needs: Build_And_Test_Logs_To_File
     permissions:
-      contents: write  # 必须要有写权限才能推送
+      contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取全部提交历史
+          fetch-depth: 0
 
       - name: Download build logs
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-logs
           path: logs/
 
       - name: Commit and push logs
         run: |
-          git config user.name "github-actions"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
+          # 检查是否有实际变更
           git add logs/
-          if (git status --porcelain) {
+          $changes = git status --porcelain
+          if ($changes) {
             git commit -m "Auto-update build logs [skip ci]"
             git push
+            Write-Output "Logs updated successfully"
           } else {
-            Write-Output "No changes to commit"
+            Write-Output "No log changes to commit"
           }
