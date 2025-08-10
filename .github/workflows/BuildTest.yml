@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths-ignore:  # 忽略logs目录的变更，防止循环触发
+      - 'logs/**'
   pull_request:
     branches:
       - master
@@ -14,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Visual Studio latest
         uses: microsoft/setup-msbuild@v1.1
@@ -33,39 +35,39 @@ jobs:
       - name: Check if demo.exe exists
         run: |
           $logPath = "logs/BuildTest.log"
-          mkdir -p logs
+          New-Item -ItemType Directory -Force -Path logs | Out-Null
           if (Test-Path "examples\\demo1.exe") {
-            Write-Host "Compilation successful, demo1.exe found. Run." | Out-File -FilePath $logPath -Append
+            "Compilation successful, demo1.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "Compilation failed, demo1.exe not found." | Out-File -FilePath $logPath -Append
+            "Compilation failed, demo1.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
           
           if (Test-Path "examples\\demo2.exe") {
-            Write-Host "Compilation successful, demo2.exe found. Run." | Out-File -FilePath $logPath -Append
+            "Compilation successful, demo2.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "Compilation failed, demo2.exe not found." | Out-File -FilePath $logPath -Append
+            "Compilation failed, demo2.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
         
           if (Test-Path "examples\\demo3.exe") {
-            Write-Host "Compilation successful, demo3.exe found. Run." | Out-File -FilePath $logPath -Append
+            "Compilation successful, demo3.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "Compilation failed, demo3.exe not found." | Out-File -FilePath $logPath -Append
+            "Compilation failed, demo3.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
 
           if (Test-Path "examples\\demo4.exe") {
-            Write-Host "Compilation successful, demo4.exe found. Run." | Out-File -FilePath $logPath -Append
+            "Compilation successful, demo4.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "Compilation failed, demo4.exe not found." | Out-File -FilePath $logPath -Append
+            "Compilation failed, demo4.exe not found." | Out-File -FilePath $logPath -Append
             exit 1
           }
 
           if (Test-Path "examples\\demo5.exe") {
-            Write-Host "Compilation Successful, demo5.exe found. Run." | Out-File -FilePath $logPath -Append
+            "Compilation Successful, demo5.exe found. Run." | Out-File -FilePath $logPath -Append
           } else {
-            Write-Host "demo5.exe not found." | Out-File -FilePath $logPath -Append
+            "demo5.exe not found." | Out-File -FilePath $logPath -Append
           }
 
       - name: Run Demo
@@ -77,17 +79,38 @@ jobs:
           .\demo4.exe
           .\demo5.exe
 
-      - name: Save Logs
-        run: |
-          $logPath = "logs/BuildTest.log"
-          Write-Host "Logs saved to $logPath" | Out-File -FilePath $logPath -Append
-  test_job:
+      - name: Upload build logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-logs
+          path: logs/
+
+  Update_Logs:
     runs-on: windows-latest
+    needs: Build_And_Test_Logs_To_File
+    permissions:
+      contents: write  # 必须要有写权限才能推送
     steps:
-      - name: TEST
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # 获取全部提交历史
+
+      - name: Download build logs
+        uses: actions/download-artifact@v3
+        with:
+          name: build-logs
+          path: logs/
+
+      - name: Commit and push logs
         run: |
-          echo TEST
-      - name: TEST2
-        run: |
-          echo Logs>nul
-      
+          git config user.name "github-actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add logs/
+          if (git status --porcelain) {
+            git commit -m "Auto-update build logs [skip ci]"
+            git push
+          } else {
+            Write-Output "No changes to commit"
+          }
